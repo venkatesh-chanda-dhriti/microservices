@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+build:
+  version: "2.0"
+
+accounts:
+  message: "Welcome to microservices -QA"
+  contactDetails:
+    name: "John-QA"
+    email: "john@qa.com"
+  onCallSupport:
+    - (666)555-1234
+    - (666)555-1236
