@@ -1,0 +1,44 @@
+server:
+  port: 8071
+
+spring:
+  application:
+    name: configserver
+
+  profiles:
+    #active: native
+    active: git
+  cloud:
+    config:
+      server:
+        git:
+          uri: "https://github.com/venkatesh-chanda-dhriti/config.git"
+          default-label: "main"
+          timeout: 5
+          clone-on-start: true
+          force-pull: true
+        #native:
+         #search-location: "classpath/config"
+          #search-location: "file:///E://microservices//config"
+
+  rabbitmq:
+    host: "localhost"
+    port: "5672"
+    username: "guest"
+    password: "guest"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    liveness-state:
+      enabled: true
+    readiness-state:
+      enabled: true
+  endpoint:
+    health:
+      probe:
+        enabled: true
+encrypt:
+  key: "45D81EC1EF61DF9AD8D3E5BB397F9"
