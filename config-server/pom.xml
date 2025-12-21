@@ -91,7 +91,7 @@
 
 					<!-- Target image -->
 					<to>
-						<image>chanda30/${project.name}:s6</image>
+						<image>chanda30/${project.name}:s7</image>
 					</to>
 				</configuration>
 			</plugin>
