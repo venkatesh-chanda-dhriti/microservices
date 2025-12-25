@@ -21,11 +21,7 @@ spring:
          #search-location: "classpath/config"
           #search-location: "file:///E://microservices//config"
 
-  rabbitmq:
-    host: "localhost"
-    port: "5672"
-    username: "guest"
-    password: "guest"
+
 management:
   endpoints:
     web:
