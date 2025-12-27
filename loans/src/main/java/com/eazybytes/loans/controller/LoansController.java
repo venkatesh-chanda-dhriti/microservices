@@ -95,6 +95,8 @@ public class LoansController {
     }
     @GetMapping("/contact-info")
     public ResponseEntity<LoansContactInfoDto> getContactInfo() {
+        logger.debug("Invoked contact-info path");
+        //throw new RuntimeException();
         return ResponseEntity.status(HttpStatus.OK).body(loansContactInfoDto);
     }
 }

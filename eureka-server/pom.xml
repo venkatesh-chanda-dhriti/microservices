@@ -74,7 +74,7 @@
 				<version>3.5.1</version>
 				<configuration>
 					<to>
-						<image>chanda30/${project.name}:s9</image>
+						<image>chanda30/${project.name}:s10</image>
 					</to>
 				</configuration>
 			</plugin>

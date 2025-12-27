@@ -41,8 +41,12 @@ public class CustomerDetailsServiceImpl implements ICustomerDetailsService {
 
     CustomerDetailsDto customerDetailsDto = CustomerMapper.mapToCustomerToCustomerDetailsDto(customer, new CustomerDetailsDto());
         customerDetailsDto.setAccountsDto(AccountsMapper.mapToAccountsToAccountsDto(accounts, new AccountsDto()));
-        customerDetailsDto.setCardsDto(cardsDtoResponseEntity.getBody());
-        customerDetailsDto.setLoansDto(loansDtoResponseEntity.getBody());
+
+        if(cardsDtoResponseEntity !=null)
+            customerDetailsDto.setCardsDto(cardsDtoResponseEntity.getBody());
+
+        if(loansDtoResponseEntity !=null)
+            customerDetailsDto.setLoansDto(loansDtoResponseEntity.getBody());
 
     return customerDetailsDto;
     }

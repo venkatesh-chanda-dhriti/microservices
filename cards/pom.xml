@@ -78,6 +78,10 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+		</dependency>
 		<!--<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-bus-amqp</artifactId>
@@ -152,7 +156,7 @@
 				<version>3.5.1</version>
 			<configuration>
 				<to>
-					<image>chanda30/${project.name}:s9</image>
+					<image>chanda30/${project.name}:s10</image>
 				</to>
 			</configuration>
 			</plugin>

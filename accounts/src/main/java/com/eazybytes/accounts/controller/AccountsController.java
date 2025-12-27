@@ -5,14 +5,19 @@ import com.eazybytes.accounts.dto.AccountsContactInfoDto;
 import com.eazybytes.accounts.dto.CustomerDto;
 import com.eazybytes.accounts.dto.ResponseDto;
 import com.eazybytes.accounts.service.IAccountsService;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.resilience.annotation.Retryable;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,6 +35,8 @@ public class AccountsController {
 
     @Autowired
     private IAccountsService iAccountsService;
+
+    private static final Logger logger = LoggerFactory.getLogger(AccountsController.class);
 
     @PostMapping("/create")
     public ResponseEntity<ResponseDto> createAccount(@Valid @RequestBody CustomerDto customerDto) {
@@ -80,14 +87,29 @@ public class AccountsController {
                     .body(new ResponseDto(AccountsConstants.STATUS_500, AccountsConstants.MESSAGE_500));
     }
 
+    @Retry(name="getBuildVersion", fallbackMethod = "getBuildVersionFallBack")
     @GetMapping("/build-info")
     public ResponseEntity<String> getBuildVersion() {
+        logger.debug("Invoked getBuildVersion method");
+        //throw  new RuntimeException();
         return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
     }
 
+    public ResponseEntity<String> getBuildVersionFallBack(Throwable throwable) {
+        logger.debug("Invoked getBuildVersionFallBack method");
+        return ResponseEntity.status(HttpStatus.OK).body("0.9");
+    }
+
+    @RateLimiter(name="getJavaVersion", fallbackMethod = "getJavaVersionFallBack")
     @GetMapping("/java-version")
     public ResponseEntity<String> getJavaVersion() {
+        logger.debug("Invoked getJavaVersion method");
         return ResponseEntity.status(HttpStatus.OK).body(environment.getProperty("JAVA_HOME"));
+    }
+
+    public ResponseEntity<String> getJavaVersionFallBack(Throwable throwable) {
+        logger.debug("Invoked getJavaVersionFallBack method");
+        return ResponseEntity.status(HttpStatus.OK).body("Java 25");
     }
 
     @GetMapping("/contact-info")
